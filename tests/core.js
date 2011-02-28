@@ -64,3 +64,21 @@ test("Stack", function() {
 	ok( stack.canUndo() );
 	ok( !stack.canRedo() );
 });
+
+test("Stack._clearRedo", function() {
+	var object = {
+		name: "Peter"
+	}
+	var command = new NameChange(object, "p0wn");
+	var stack = new Undo.Stack();
+	
+	stack.execute(command)
+	stack.execute(command)
+	stack.execute(command)
+	stack.undo();
+	stack.undo();
+	stack.undo();
+	
+	stack.execute(command);
+	ok( !stack.canRedo() );
+});

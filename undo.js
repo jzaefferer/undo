@@ -85,8 +85,7 @@ extend(Undo.Stack.prototype, {
 	},
 	_clearRedo: function() {
 		// TODO there's probably a more efficient way for this
-		// FIXME
-		//this.commands = this.commands.slice(0, this.stackPosition);
+		this.commands = this.commands.slice(0, this.stackPosition + 1);
 	},
 	changed: function() {
 		// do nothing, override
