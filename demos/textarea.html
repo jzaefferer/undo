@@ -57,6 +57,7 @@
 				var newValue = text.val();
 				// ignore meta key presses
 				if (newValue != startValue) {
+					// this could try and make a diff instead of storing snapshots
 					stack.execute(new EditCommand(text, startValue, newValue));
 					startValue = newValue;
 				}
