@@ -70,7 +70,7 @@ extend(Undo.Stack.prototype, {
 	},
 	redo: function() {
 		this.stackPosition++;
-		this.commands[this.stackPosition].execute();
+		this.commands[this.stackPosition].redo();
 		this.changed();
 	},
 	canRedo: function() {

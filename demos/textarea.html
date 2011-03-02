@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="../undo.js"></script>
+	<script src="../vendor/jquery-1.5.1.js"></script>
+	<title>Undo.js demo</title>
+	<style>
+		body { font:62.5% Verdana,Arial,sans-serif; }
+	</style>
+	<script>
+	$(function() {
+		var stack = new Undo.Stack(),
+			EditCommand = Undo.Command.extend({
+				constructor: function(textarea, oldValue, newValue) {
+					this.textarea = textarea;
+					this.oldValue = oldValue;
+					this.newValue = newValue;
+				},
+				execute: function() {
+				},
+				undo: function() {
+					this.textarea.val(this.oldValue);
+				},
+				
+				redo: function() {
+					this.textarea.val(this.newValue);
+				}
+			});
+		stack.changed = function() {
+			stackUI();
+		};
+		
+		var undo = $(".undo"),
+			redo = $(".redo"),
+			dirty = $(".dirty");
+		function stackUI() {
+			undo.attr("disabled", !stack.canUndo());
+			redo.attr("disabled", !stack.canRedo());
+			dirty.toggle(stack.dirty());
+		}
+		stackUI();
+		
+		$(document.body).delegate(".undo, .redo, .save", "click", function() {
+			var what = $(this).attr("class");
+			stack[what]();
+			return false;
+		});
+		
+		var text = $("#text"),
+			startValue = text.val(),
+			timer;
+		$("#text").bind("keyup", function() {
+			// a way too simple algorithm in place of single-character undo
+			clearTimeout(timer);
+			timer = setTimeout(function() {
+				var newValue = text.val();
+				// ignore meta key presses
+				if (newValue != startValue) {
+					stack.execute(new EditCommand(text, startValue, newValue));
+					startValue = newValue;
+				}
+			}, 250);
+		});
+	});
+	</script>
+</head>
+<body>
+	<button class="undo" href="#">Undo</button>
+	<button class="redo" href="#">Redo</button>
+	<button class="save" href="#">Save<span class="dirty">*</span></button>
+	<form>
+		<textarea id="text"></textarea>
+	</form>
+</body>
+</html>

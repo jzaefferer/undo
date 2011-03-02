@@ -10,7 +10,7 @@
 	</style>
 	<script>
 	$(function() {
-		var stack = window.stack = new Undo.Stack(),
+		var stack = new Undo.Stack(),
 			UpCommand = Undo.Command.extend({
 				constructor: function(li) {
 					this.li = li;
