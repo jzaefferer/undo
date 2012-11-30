@@ -30,8 +30,9 @@ var inherits = function(parent, protoProps) {
 };
 
 function extend(target, ref) {
+	var name, value;
 	for ( name in ref ) {
-		var value = ref[name];
+		value = ref[name];
 		if (value !== undefined) {
 			target[ name ] = value;
 		}
