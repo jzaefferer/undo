@@ -7,7 +7,6 @@
  * 
  * MIT licensed.
  */
-(function() {
 
 // based on Backbone.js' inherits	
 var ctor = function(){};
@@ -52,17 +51,19 @@ Undo.Stack = function() {
 };
 
 extend(Undo.Stack.prototype, {
-	execute: function(command) {
+	execute: async function(command) {
 		this._clearRedo();
-		command.execute();
+		await command.execute();
 		this.commands.push(command);
 		this.stackPosition++;
 		this.changed();
 	},
-	undo: function() {
-		this.commands[this.stackPosition].undo();
-		this.stackPosition--;
-		this.changed();
+	undo: async function() {
+		if (this.canUndo()) {
+			await this.commands[this.stackPosition].undo();
+			this.stackPosition--;
+			this.changed();
+		}
 	},
 	canUndo: function() {
 		return this.stackPosition >= 0;
@@ -115,13 +116,4 @@ Undo.Command.extend = function(protoProps) {
 	return child;
 };
 	
-// AMD support
-if (typeof define === "function" && define.amd) {
-	// Define as an anonymous module
-	define(Undo);
-} else if(typeof module != "undefined" && module.exports){
-	module.exports = Undo 
-}else {
-	this.Undo = Undo;
-}
-}).call(this);
+export default Undo;
