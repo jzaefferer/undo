@@ -1,5 +1,7 @@
 # Undo.js
 
+**This is only a proof of concept, not a proper library.**
+
 Undo.js provides an abstraction for undoing and redoing any task. It can run both in the browser and on the server (targetted at node.js).
 It can be used to add undo and redo features to a custom application, e.g. undo and redo changing the priority of a task in a TODO list.
 It can also be used to undo and redo native browser features: Clicking a checkbox, editing a textbox and eventually, editing a contenteditable element.
