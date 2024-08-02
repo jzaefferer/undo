@@ -21,8 +21,8 @@ Via npm: `npm install undo.js`
 
 ## Demos:
 
-http://jzaefferer.github.com/undo/demos/
-http://jzaefferer.github.com/undo/demos/contenteditable.html
+http://jzaefferer.github.io/undo/demos/
+http://jzaefferer.github.io/undo/demos/contenteditable.html
 
 ## To suggest a feature, report a bug, or general discussion:
 
